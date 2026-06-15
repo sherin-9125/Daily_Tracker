@@ -8,7 +8,7 @@ int main(){
 // creating a pointer 
     int* ptr=&age;
     cout<<ptr<<endl; // cout<<&age; same op
-// getting the value throudh pointer via deferencing
+// getting the value through pointer via deferencing
     cout<<*ptr<<endl;    // cout<<age; same op
 // pointer for pointer usine ** 
     int** ptr2 = &ptr;
