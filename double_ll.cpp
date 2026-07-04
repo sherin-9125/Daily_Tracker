@@ -38,19 +38,64 @@ class DoublyList
   void printLL(){
     Node* temp = head;
     while(temp !=NULL){
-      cout<<temp->data << " <=>";
+      cout<<temp->data << " <=> ";
       temp=temp->next;
     }
     cout<<"NULL\n";
 
   }
+  void push_back(int val){
+    Node* newNode = new Node(val);
+     if(head==NULL){
+      head=tail=newNode;
+    }
+    else{
+      tail->next=newNode;
+      newNode->prev=tail;
+      tail=newNode;
+
+    }
+  }  
+  void pop_front(){
+    if(head==NULL){
+      cout<<"list is empty";
+      return;
+    }
+    Node* temp=head;
+    head=head->next;
+    if(head!=NULL){
+      head->prev=NULL;
+      temp->next=NULL;
+      delete temp;
+    }
+  }
+  void pop_back(){
+    if(head==NULL){
+      cout<<"dll is empty";
+      return;
+    }
+    Node* temp =tail;
+    tail=tail->prev;
+    if(tail!=NULL){
+        
+      tail->next=NULL;
+      }
+       temp->prev=NULL;
+       delete temp;
+    
+     
+  }
 };
 int main(){
 
   DoublyList ll;
-  ll. push_front(1);
-  ll.push_front(2);
+  ll. push_back(1);
+  ll.push_back(2);
+  ll.push_back(3);
+  ll.pop_front();
+  ll.pop_back();
   ll.printLL();
 
   return 0;
+
 }
