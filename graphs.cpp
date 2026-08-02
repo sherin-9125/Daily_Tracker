@@ -4,7 +4,7 @@
 #include<queue>
 using namespace std;
 
-class Graph{
+class Graph {
   int V;
   list <int> *l;
 
@@ -58,18 +58,70 @@ public:
   }
 
  }
+ bool iscycleUndirDFS(int src,int par,vector<bool> &vis){
+  vis[src]=true;
+  list<int> neighbors = l[src];
+  for(int v: neighbors){
+    if(!vis[v]){
+      if(iscycleUndirDFS(v,src,vis)){
+        return true;
+      }
+    }
+    else if(v!= par)
+        {
+          return true;
+      }
+  }
+    return false;
+  } 
+  bool iscycleUndirBFS(int src,int par,vector<bool> &vis)
+  {
+  queue<pair<int,int>>q;
+  vis[src]=true;
+  q.push({src,par});
+  while(!q.empty()){
+    auto [current, parent] = q.front();
+    q.pop();
+  
+     for(int nbr : l[current]){
+       if(!vis[nbr]){
+         vis[nbr]=true;
+         q.push({nbr,current});
+
+        }
+        else if(nbr!=parent){
+          return true;
+        }
+     }
+  }
+  return false;
+}
+
+ bool iscycle(){
+  vector<bool> vis(V,false);
+  for(int i=0;i<V;i++){
+    if(!vis[i]){
+      if(iscycleUndirBFS(i,-1,vis)){
+        return true;
+      }
+    }
+  }
+    return false;
+
+ }
+
+ 
+
 };
 
 int main(){
   Graph g(5);
   g.addEdge(0,1);
+  g.addEdge(0,2);
+  g.addEdge(0,3);
   g.addEdge(1,2);
-  g.addEdge(1,3);
-  g.addEdge(2,4);
-  cout<<"bfs:";
-  g.bfs();
-  cout<<"dfs:";
-  g.dfs();
+  g.addEdge(3,4);
+  cout<<g.iscycle()<<endl;
   
 
 
